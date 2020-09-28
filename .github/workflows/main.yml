@@ -52,7 +52,7 @@ jobs:
           BRANCH_NAME: add/#${{ steps.parse-issue.outputs.issueNumber}}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: BRANCH_NAME
+          branch: $BRANCH_NAME
 
       # - name: Initialize Pull Request
       #   uses: gha-utilities/init-pull-request@v0.2.0
