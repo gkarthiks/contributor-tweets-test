@@ -59,10 +59,10 @@ try {
     if (scheduledTime === "") {
         console.log("Scheduled time is null, creating the file name with the specified format.")
         var date = new Date();
-        if (fileNameFormat === "dd-mm-yyyy") {
+        if (fileNameFormat === "dd-mm-yyyy-hh-MM") {
             console.log(date.ddmmyyyy());
             fileNameDate = date.ddmmyyyy();
-        } else if (fileNameFormat === "mm-dd-yyyy") {
+        } else if (fileNameFormat === "mm-dd-yyyy-hh-MM") {
             console.log(date.mmddyyyy());
             fileNameDate = date.mmddyyyy();
         }

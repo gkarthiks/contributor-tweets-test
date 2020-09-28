@@ -12,7 +12,7 @@ inputs:
   file-name-format:
     description: 'The file name format that needs to be stored as'
     required: true
-    default: "dd-mm-yyyy"
+    default: "dd-mm-yyyy-hh-MM"
   file-name-extension:
     description: "The extension that needs to be used for the tweet file."
     required: true
