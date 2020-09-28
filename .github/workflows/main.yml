@@ -18,33 +18,33 @@ jobs:
           file-name-extension: 'tweet'
 
 
-      - name: Git commit
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        run: |
-          # git commit if there's any change
-          if test -n "$(git status --porcelain 2>/dev/null)"; then
-              git config --global user.email "github.gkarthiks@gmail.com"
-              git config --global user.name "PR Bot"
-              git add .
-              git commit -m "adding tweet file for #$ISSUE_NUMBER"
-          fi
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-
-
-
-      # - name: Checkout branch for Pull Requesting
-      #   uses: actions/checkout@v2
+      # - name: Git commit
       #   env:
       #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   run: |
+      #     # git commit if there's any change
+      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
+      #         git config --global user.email "github.gkarthiks@gmail.com"
+      #         git config --global user.name "PR Bot"
+      #         git add .
+      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
+      #     fi
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
       #   with:
-      #     ref: add/#$ISSUE_NUMBER
-      #     fetch-depth: 1
-      #     submodules: true
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+      - name: Checkout branch for Pull Requesting
+        uses: actions/checkout@v2
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        with:
+          ref: add/#$ISSUE_NUMBER
+          fetch-depth: 1
+          submodules: true
 
       # - name: Add changes to Git tracking
       #   run: git add -A .
