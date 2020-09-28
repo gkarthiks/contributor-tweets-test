@@ -49,7 +49,7 @@ jobs:
           wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_amd64.tar.gz &&  tar -xzf gh_1.0.0_linux_amd64.tar.gz
           gh_1.0.0_linux_amd64/bin/gh -h
 
-          gh_1.0.0_linux_amd64/bin/gh create pr -f
+          gh_1.0.0_linux_amd64/bin/gh pr create -f
 
       # - name: Initialize Pull Request
       #   uses: gha-utilities/init-pull-request@v0.2.0
