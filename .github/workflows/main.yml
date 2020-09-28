@@ -27,37 +27,49 @@ jobs:
       #         git add .
       #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
       #     fi
-      - name: Git commit
+      - name: Checkout branch for Pull Requesting
+        uses: actions/checkout@v2
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          ref: add/#$ISSUE_NUMBER
+          fetch-depth: 1
+          submodules: true
+
+      - name: Add changes to Git tracking
+        run: git add -A .
+
+      - name: Commit changes
         run: |
-          # git commit if there's any change
-          if test -n "$(git status --porcelain 2>/dev/null)"; then
-              git checkout -b add/#$ISSUE_NUMBER
-              API_VERSION=v3;
-              BASE=https://api.github.com;
-              AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}";
-              HEADER="Accept: application/vnd.github.${API_VERSION}+json";
-              HEADER="${HEADER}; application/vnd.github.antiope-preview+json; application/vnd.github.shadow-cat-preview+json";
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m 'add: new tweet file'
 
-              REPO_URL="${BASE}/repos/${GITHUB_REPOSITORY}";
-              PULLS_URL="${REPO_URL}/pulls";
 
-              SOURCE="add/#$ISSUE_NUMBER";  # from this branch
-              TARGET="master";  # pull request TO this target
-              BODY="this is the content of the message"
-              TITLE="new tweet file for #$ISSUE_NUMBER"
-              DRAFT="false";   # if PRs are draft
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: add/#$ISSUE_NUMBER
 
-              DATA="{\"title\":\"${TITLE}\", \"body\":\"${BODY}\", \"base\":\"${TARGET}\", \"head\":\"${SOURCE}\", \"draft\":\"${DRAFT}\"}";
-              curl -sSL -H "${AUTH_HEADER}" -H "${HEADER}" -X POST --data "${DATA}" ${PULLS_URL};
 
-              # git config --global user.email "github.gkarthiks@gmail.com"
-              # git config --global user.name "PR Bot"
-              # git add .
-              # git commit -m "adding tweet file for #$ISSUE_NUMBER"
-          fi
+      - name: Initialize Pull Request
+        uses: gha-utilities/init-pull-request@v0.2.0
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        with:
+          verbose: true
+          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+          head: add/#$ISSUE_NUMBER
+          base: master
+          title: 'add: new tweet file'
+          body: >
+            Adding a new tweet file.
+
+            Ref: #$ISSUE_NUMBER"
+
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
