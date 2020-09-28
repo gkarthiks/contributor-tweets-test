@@ -27,16 +27,36 @@ jobs:
       #         git add .
       #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
       #     fi
-      - name: Update packages
-        uses: technote-space/create-pr-action@v2
-        with:
-          EXECUTE_COMMANDS: |
-            echo "nothing to executehere"
-          COMMIT_MESSAGE: 'feat: adding tweet file for issue #$ISSUE_NUMBER"'
-          COMMIT_NAME: 'GitHub Actions'
-          COMMIT_EMAIL: 'github.gkarthiks@gmail.com'
-          PR_BRANCH_NAME: 'feat-new-tweet-${PR_ID}'
-          PR_TITLE: 'add: new tweet request'
+      - name: Git commit
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        run: |
+          # git commit if there's any change
+          if test -n "$(git status --porcelain 2>/dev/null)"; then
+              git checkout -b add/#$ISSUE_NUMBER
+              API_VERSION=v3;
+              BASE=https://api.github.com;
+              AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}";
+              HEADER="Accept: application/vnd.github.${API_VERSION}+json";
+              HEADER="${HEADER}; application/vnd.github.antiope-preview+json; application/vnd.github.shadow-cat-preview+json";
+
+              REPO_URL="${BASE}/repos/${GITHUB_REPOSITORY}";
+              PULLS_URL="${REPO_URL}/pulls";
+
+              SOURCE="add/#$ISSUE_NUMBER";  # from this branch
+              TARGET="master";  # pull request TO this target
+              BODY="this is the content of the message"
+              TITLE="new tweet file for #$ISSUE_NUMBER"
+              DRAFT="false";   # if PRs are draft
+
+              DATA="{\"title\":\"${TITLE}\", \"body\":\"${BODY}\", \"base\":\"${TARGET}\", \"head\":\"${SOURCE}\", \"draft\":\"${DRAFT}\"}";
+              curl -sSL -H "${AUTH_HEADER}" -H "${HEADER}" -X POST --data "${DATA}" ${PULLS_URL};
+
+              # git config --global user.email "github.gkarthiks@gmail.com"
+              # git config --global user.name "PR Bot"
+              # git add .
+              # git commit -m "adding tweet file for #$ISSUE_NUMBER"
+          fi
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
