@@ -42,7 +42,7 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
         with:
-          ref: add/#$ISSUE_NUMBER
+          ref: add/$ISSUE_NUMBER
           fetch-depth: 1
           submodules: true
 
