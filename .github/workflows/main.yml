@@ -30,6 +30,7 @@ jobs:
       - name: Git commit
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # git commit if there's any change
           if test -n "$(git status --porcelain 2>/dev/null)"; then
