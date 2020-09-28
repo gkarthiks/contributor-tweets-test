@@ -26,6 +26,7 @@ try {
     
     var startingParseSymbol = core.getInput("starting-parse-symbol").trim();
     var issueContext = github.context.payload.issue.body;
+    var issueNumber = github.context.payload.issue.number;
     var fileNameFormat = core.getInput("file-name-format").trim();
     var pathToSave = core.getInput("path-to-save").trim();
     var fileNameExtension = core.getInput("file-name-extension").trim();
@@ -33,12 +34,12 @@ try {
 
     var issueTitle = github.context.payload.issue.title;
     var issueTitle30Chars = issueTitle.substring(0,30);
-    var sanitizedIssueTitle = issueTitle30Chars.replace(/[^a-zA-Z0-9]/g,'-').trim();
+    var sanitizedIssueTitle = issueTitle30Chars.replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1);
 
 
     if (!fs.existsSync(pathToSave)){
         fs.mkdirSync(pathToSave, { recursive: true });
-      }
+    }
 
     console.log(`
     The symbol declared for parsing is ${startingParseSymbol}
@@ -70,9 +71,10 @@ try {
 
     fs.writeFile(dataFilePath, tweetContent, (err) => {
         if (err) throw err;
-      });
+    });
 
-    
+    core.setOutput("issueNumber", issueNumber);
+
 } catch (error) {
     core.setFailed(error.message);
 }
