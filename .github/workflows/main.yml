@@ -47,7 +47,6 @@ jobs:
           git push origin add/#$ISSUE_NUMBER
 
           wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_amd64.tar.gz &&  tar -xzf gh_1.0.0_linux_amd64.tar.gz
-          gh_1.0.0_linux_amd64/bin/gh -h
 
           gh_1.0.0_linux_amd64/bin/gh pr create -f
 
