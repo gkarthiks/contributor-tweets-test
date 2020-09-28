@@ -44,15 +44,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m 'add: new tweet file'
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-          BRANCH_NAME: add/#${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ BRANCH_NAME }}
+          git push origin add/#$ISSUE_NUMBER
 
       # - name: Initialize Pull Request
       #   uses: gha-utilities/init-pull-request@v0.2.0
