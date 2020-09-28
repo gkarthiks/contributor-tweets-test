@@ -16,17 +16,27 @@ jobs:
         with:
           starting-parse-symbol: '<!--::-->'
           file-name-extension: 'tweet'
-      - name: Git commit
+      - name: Git try with gh
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
         run: |
           # git commit if there's any change
-          if test -n "$(git status --porcelain 2>/dev/null)"; then
-              git config --global user.email "github.gkarthiks@gmail.com"
-              git config --global user.name "PR Bot"
-              git add .
-              git commit -m "adding tweet file for #$ISSUE_NUMBER"
-          fi
+          wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_arm64.tar.gz
+          tar -xzf gh_1.0.0_linux_arm64.tar.gz
+          mv gh_1.0.0_linux_arm64/bin/gh /usr/local/bin/
+          
+      # - name: Git commit
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   run: |
+      #     # git commit if there's any change
+      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
+      #         git config --global user.email "github.gkarthiks@gmail.com"
+      #         git config --global user.name "PR Bot"
+      #         git add .
+      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
+      #     fi
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
