@@ -25,7 +25,7 @@ jobs:
               git config --global user.email "github.gkarthiks@gmail.com"
               git config --global user.name "PR Bot"
               git add .
-              git commit -m "$ISSUE_NUMBER"
+              git commit -m "adding tweet file for #$ISSUE_NUMBER"
           fi
       - name: Push changes
         uses: ad-m/github-push-action@master
