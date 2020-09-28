@@ -38,6 +38,7 @@ jobs:
       - name: Commit changes in new branch
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git checkout -b add/#$ISSUE_NUMBER
           git add -A .
@@ -46,7 +47,13 @@ jobs:
           git commit -m 'add: new tweet file'
           git push origin add/#$ISSUE_NUMBER
 
+          echo "============================================================="
+          echo $GITHUB_TOKEN
+          echo "============================================================="
+
           wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_amd64.tar.gz &&  tar -xzf gh_1.0.0_linux_amd64.tar.gz
+
+          gh_1.0.0_linux_amd64/bin/gh auth login
 
           gh_1.0.0_linux_amd64/bin/gh pr create -f
 
