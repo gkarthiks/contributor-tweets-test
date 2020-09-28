@@ -49,9 +49,10 @@ jobs:
         uses: ad-m/github-push-action@master
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+          BRANCH_NAME: ${{ add/#$ISSUE_NUMBER }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: add/#$ISSUE_NUMBER
+          branch: BRANCH_NAME
 
       # - name: Initialize Pull Request
       #   uses: gha-utilities/init-pull-request@v0.2.0
