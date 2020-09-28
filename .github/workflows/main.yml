@@ -35,7 +35,7 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Commit changes
+      - name: Commit changes in new branch
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
         run: |
@@ -45,13 +45,13 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -m 'add: new tweet file'
 
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: add/#$ISSUE_NUMBER
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: add/#$ISSUE_NUMBER
 
       # - name: Initialize Pull Request
       #   uses: gha-utilities/init-pull-request@v0.2.0
