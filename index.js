@@ -8,7 +8,9 @@ Date.prototype.ddmmyyyy = function() {
   
     return [(dd>9 ? '' : '0') + dd,
             (mm>9 ? '' : '0') + mm,
-            this.getFullYear()
+            this.getFullYear(),
+            this.getUTCHours(),
+            this.getUTCMinutes()
            ].join('-');
 };
 
@@ -18,7 +20,9 @@ Date.prototype.mmddyyyy = function() {
   
     return [(mm>9 ? '' : '0') + mm,
             (dd>9 ? '' : '0') + dd,
-            this.getFullYear()
+            this.getFullYear(),
+            this.getUTCHours(),
+            this.getUTCMinutes()
            ].join('-');
 };
 
