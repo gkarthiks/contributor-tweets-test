@@ -46,17 +46,20 @@ jobs:
           git commit -m 'add: new tweet file'
           git push origin add/#$ISSUE_NUMBER
 
-      - name: Initialize Pull Request
-        uses: gha-utilities/init-pull-request@v0.2.0
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          verbose: true
-          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
-          head: add/#$ISSUE_NUMBER
-          base: master
-          title: 'add: new tweet file'
-          body: >
-            Adding a new tweet file.
+          wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_arm64.tar.gz &&  tar -xzf gh_1.0.0_linux_arm64.tar.gz
+          gh_1.0.0_linux_arm64/bin/gh -h
 
-            Ref: #$ISSUE_NUMBER"
+      # - name: Initialize Pull Request
+      #   uses: gha-utilities/init-pull-request@v0.2.0
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   with:
+      #     verbose: true
+      #     pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+      #     head: add/#$ISSUE_NUMBER
+      #     base: master
+      #     title: 'add: new tweet file'
+      #     body: >
+      #       Adding a new tweet file.
+
+      #       Ref: #$ISSUE_NUMBER"
