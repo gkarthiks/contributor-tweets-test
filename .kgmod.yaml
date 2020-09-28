@@ -1,4 +1,0 @@
-modules:
-  - github.com/ChimeraCoder/anaconda
-  - github.com/ChimeraCoder/tokenbucket
-  - github.com/google/go-github/v32/github
