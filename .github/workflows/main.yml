@@ -16,62 +16,64 @@ jobs:
         with:
           starting-parse-symbol: '<!--::-->'
           file-name-extension: 'tweet'
-      # - name: Git commit
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   run: |
-      #     # git commit if there's any change
-      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
-      #         git config --global user.email "github.gkarthiks@gmail.com"
-      #         git config --global user.name "PR Bot"
-      #         git add .
-      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
-      #     fi
-      - name: Checkout branch for Pull Requesting
-        uses: actions/checkout@v2
+
+
+      - name: Git commit
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          ref: add/#$ISSUE_NUMBER
-          fetch-depth: 1
-          submodules: true
-
-      - name: Add changes to Git tracking
-        run: git add -A .
-
-      - name: Commit changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m 'add: new tweet file'
-
-
+          # git commit if there's any change
+          if test -n "$(git status --porcelain 2>/dev/null)"; then
+              git config --global user.email "github.gkarthiks@gmail.com"
+              git config --global user.name "PR Bot"
+              git add .
+              git commit -m "adding tweet file for #$ISSUE_NUMBER"
+          fi
       - name: Push changes
         uses: ad-m/github-push-action@master
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: add/#$ISSUE_NUMBER
 
 
-      - name: Initialize Pull Request
-        uses: gha-utilities/init-pull-request@v0.2.0
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          verbose: true
-          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
-          head: add/#$ISSUE_NUMBER
-          base: master
-          title: 'add: new tweet file'
-          body: >
-            Adding a new tweet file.
 
-            Ref: #$ISSUE_NUMBER"
 
+      # - name: Checkout branch for Pull Requesting
+      #   uses: actions/checkout@v2
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   with:
+      #     ref: add/#$ISSUE_NUMBER
+      #     fetch-depth: 1
+      #     submodules: true
+
+      # - name: Add changes to Git tracking
+      #   run: git add -A .
+
+      # - name: Commit changes
+      #   run: |
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git commit -m 'add: new tweet file'
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
       #   with:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: add/#$ISSUE_NUMBER
+
+      # - name: Initialize Pull Request
+      #   uses: gha-utilities/init-pull-request@v0.2.0
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   with:
+      #     verbose: true
+      #     pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+      #     head: add/#$ISSUE_NUMBER
+      #     base: master
+      #     title: 'add: new tweet file'
+      #     body: >
+      #       Adding a new tweet file.
+
+      #       Ref: #$ISSUE_NUMBER"
