@@ -35,25 +35,15 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
-
-
-      - name: Checkout branch for Pull Requesting
-        uses: actions/checkout@v2
+      - name: Commit changes
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          ref: $ISSUE_NUMBER
-          # fetch-depth: 1
-          # submodules: true
-
-      # - name: Add changes to Git tracking
-      #   run: git add -A .
-
-      # - name: Commit changes
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git commit -m 'add: new tweet file'
+        run: |
+          git checkout -b add/#$ISSUE_NUMBER
+          git add -A .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m 'add: new tweet file'
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
