@@ -18,31 +18,31 @@ jobs:
           file-name-extension: 'tweet'
 
 
-      # - name: Git commit
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   run: |
-      #     # git commit if there's any change
-      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
-      #         git config --global user.email "github.gkarthiks@gmail.com"
-      #         git config --global user.name "PR Bot"
-      #         git add .
-      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
-      #     fi
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Add new tweet file for #$ISSUE_NUMBER
-          title: 'add: new tweet filr for #$ISSUE_NUMBER'
-          body: >
-            This PR is auto-generated.
-          labels: report, automated pr
+      - name: Git commit
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        run: |
+          # git commit if there's any change
+          if test -n "$(git status --porcelain 2>/dev/null)"; then
+              git config --global user.email "github.gkarthiks@gmail.com"
+              git config --global user.name "PR Bot"
+              git add .
+              git commit -m "adding tweet file for #$ISSUE_NUMBER"
+          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v3
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     commit-message: Add new tweet file for ${{ ISSUE_NUMBER }}
+      #     title: 'add: new tweet filr for #$ISSUE_NUMBER'
+      #     body: >
+      #       This PR is auto-generated.
+      #     labels: report, automated pr
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
