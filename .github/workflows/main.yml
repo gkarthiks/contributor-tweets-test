@@ -23,10 +23,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Add new tweet file via automation
           title: 'add: new tweet file via automation'
-          body: >
+          body: |
             This PR is auto-generated.
             Ref: #${{ steps.parse-issue.outputs.issueNumber}}
-            /cc ${{ github.actor }}
+            /cc @${{ github.actor }}
           labels: report, automated pr
           branch: add/${{ steps.parse-issue.outputs.issueNumber}}
           base: master
