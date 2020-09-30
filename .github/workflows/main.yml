@@ -18,24 +18,43 @@ jobs:
           file-name-extension: 'tweet'
 
 
+      # - name: Git commit
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   run: |
+      #     # git commit if there's any change
+      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
+      #         git config --global user.email "github.gkarthiks@gmail.com"
+      #         git config --global user.name "PR Bot"
+      #         git add .
+      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
+      #     fi
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   env:
+      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     repository: add/$ISSUE_NUMBER
+
+
       - name: Git commit
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+        # with:
+        #   github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # git commit if there's any change
           if test -n "$(git status --porcelain 2>/dev/null)"; then
+              git checkout -b add/$ISSUE_NUMBER
               git config --global user.email "github.gkarthiks@gmail.com"
               git config --global user.name "PR Bot"
               git add .
               git commit -m "adding tweet file for #$ISSUE_NUMBER"
+              git push origin add/$ISSUE_NUMBER
           fi
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        env:
-          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository: add/$ISSUE_NUMBER
+
+
 
 
       # - name: Create Pull Request
