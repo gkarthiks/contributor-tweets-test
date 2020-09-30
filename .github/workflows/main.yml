@@ -35,39 +35,14 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Commit changes in new branch
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Add new tweet file for #$ISSUE_NUMBER
+          title: 'add: new tweet filr for #$ISSUE_NUMBER'
+          body: >
+            This PR is auto-generated.
+          labels: report, automated pr
         env:
           ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git checkout -b add/#$ISSUE_NUMBER
-          git add -A .
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m 'add: new tweet file'
-          git push origin add/#$ISSUE_NUMBER
-
-          echo "============================================================="
-          echo $GITHUB_TOKEN
-          echo "============================================================="
-
-          wget https://github.com/cli/cli/releases/download/v1.0.0/gh_1.0.0_linux_amd64.tar.gz &&  tar -xzf gh_1.0.0_linux_amd64.tar.gz
-
-          gh_1.0.0_linux_amd64/bin/gh auth login --with-token
-
-          gh_1.0.0_linux_amd64/bin/gh pr create -f
-
-      # - name: Initialize Pull Request
-      #   uses: gha-utilities/init-pull-request@v0.2.0
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   with:
-      #     verbose: true
-      #     pull_request_token: ${{ secrets.GITHUB_TOKEN }}
-      #     head: add/#$ISSUE_NUMBER
-      #     base: master
-      #     title: 'add: new tweet file'
-      #     body: >
-      #       Adding a new tweet file.
-
-      #       Ref: #$ISSUE_NUMBER"
