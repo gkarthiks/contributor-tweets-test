@@ -4,7 +4,7 @@ on:
     types: ['opened']
 
 jobs:
-  parse_issue_create_tweet_file_job:
+  parse-issue-and-create-pr:
     runs-on: ubuntu-latest
     name: A job to parse issue and commit into tweets folder
     steps:
@@ -17,56 +17,18 @@ jobs:
           starting-parse-symbol: '<!--::-->'
           file-name-extension: 'tweet'
 
-
-      # - name: Git commit
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   run: |
-      #     # git commit if there's any change
-      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
-      #         git config --global user.email "github.gkarthiks@gmail.com"
-      #         git config --global user.name "PR Bot"
-      #         git add .
-      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
-      #     fi
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     repository: add/$ISSUE_NUMBER
-
-
-      # - name: Git commit
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
-      #   # with:
-      #   #   github_token: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     # git commit if there's any change
-      #     if test -n "$(git status --porcelain 2>/dev/null)"; then
-      #         # git checkout -b add/$ISSUE_NUMBER
-      #         # git config --global user.email "github.gkarthiks@gmail.com"
-      #         git config --global user.name "PR Bot"
-      #         git add tweets/
-      #         git commit -m "adding tweet file for #$ISSUE_NUMBER"
-      #         git push origin add/$ISSUE_NUMBER
-      #     fi
-
-
-
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Add new tweet file for ${{ steps.parse-issue.outputs.issueNumber}}
-          title: 'add: new tweet filr for #${{ steps.parse-issue.outputs.issueNumber}}'
+          commit-message: Add new tweet file via automation
+          title: 'add: new tweet file via automation'
           body: >
             This PR is auto-generated.
+            Ref: #${{ steps.parse-issue.outputs.issueNumber}}
+            /cc ${{ github.actor }}
           labels: report, automated pr
           branch: add/${{ steps.parse-issue.outputs.issueNumber}}
           base: master
-        # env:
-        #   ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+          signoff: true
+          delete-branch: true
