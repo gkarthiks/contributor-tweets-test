@@ -54,14 +54,18 @@ jobs:
               git push origin add/$ISSUE_NUMBER
           fi
 
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     commit-message: Add new tweet file for ${{ ISSUE_NUMBER }}
-      #     title: 'add: new tweet filr for #$ISSUE_NUMBER'
-      #     body: >
-      #       This PR is auto-generated.
-      #     labels: report, automated pr
-      #   env:
-      #     ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
+
+
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Add new tweet file for ${{ steps.parse-issue.outputs.issueNumber}}
+          title: 'add: new tweet filr for #${{ steps.parse-issue.outputs.issueNumber}}'
+          body: >
+            This PR is auto-generated.
+          labels: report, automated pr
+          branch: add/${{ steps.parse-issue.outputs.issueNumber}}
+        # env:
+        #   ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
