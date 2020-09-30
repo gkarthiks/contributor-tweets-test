@@ -31,8 +31,11 @@ jobs:
           fi
       - name: Push changes
         uses: ad-m/github-push-action@master
+        env:
+          ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: add/$ISSUE_NUMBER
 
 
       # - name: Create Pull Request
