@@ -49,7 +49,7 @@ jobs:
               git checkout -b add/$ISSUE_NUMBER
               git config --global user.email "github.gkarthiks@gmail.com"
               git config --global user.name "PR Bot"
-              git add tweet/
+              git add tweets/
               git commit -m "adding tweet file for #$ISSUE_NUMBER"
               git push origin add/$ISSUE_NUMBER
           fi
