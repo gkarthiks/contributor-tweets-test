@@ -66,7 +66,7 @@ jobs:
           body: >
             This PR is auto-generated.
           labels: report, automated pr
-          base: add/${{ steps.parse-issue.outputs.issueNumber}}
+          branch: add/${{ steps.parse-issue.outputs.issueNumber}}
           # branch: master
         # env:
         #   ISSUE_NUMBER: ${{ steps.parse-issue.outputs.issueNumber}}
