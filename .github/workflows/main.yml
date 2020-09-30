@@ -54,16 +54,6 @@ jobs:
               git push origin add/$ISSUE_NUMBER
           fi
 
-      - name: Create Pull Request
-        uses: vsoch/pull-request-action@1.0.6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_PREFIX: "add/"
-          PULL_REQUEST_BRANCH: "master"
-          PULL_REQUEST_TITLE: "automated pull request"
-          PULL_REQUEST_BODY: Automated pull request for $ISSUE_NUMBER"
-
-
       # - name: Create Pull Request
       #   uses: peter-evans/create-pull-request@v3
       #   with:
