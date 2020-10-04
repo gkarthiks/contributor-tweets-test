@@ -1,4 +1,4 @@
-name: Run tests
+name: Cron Job for tweeting schedule
 on:
   schedule:
     - cron: '* * * * *'
