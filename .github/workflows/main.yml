@@ -1,4 +1,4 @@
-name: CI
+name: Parse and create PR
 on:
   issues:
     types: ['opened']
