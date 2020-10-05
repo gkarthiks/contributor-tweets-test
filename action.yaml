@@ -20,7 +20,6 @@ inputs:
   token:
     description: Github token for octokit to comment back in the issue.
     required: true
-    default: ${{ secrets.GITHUB_TOKEN }}
 runs:
   using: 'node12'
   main: 'index.js'
