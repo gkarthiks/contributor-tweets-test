@@ -76,7 +76,7 @@ try {
         completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
         console.log(`file name tio be saved is ${completeFileName}`)
     } else {
-        fileNameFormat = new Date(tweetScheduleTime).toJSON().replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1)
+        fileNameDate = new Date(tweetScheduleTime).toJSON().replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1)
         completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
         console.log(`file name tio be saved is ${completeFileName}`)
     }
@@ -87,12 +87,12 @@ try {
         if (err) throw err;
     });
 
-    github.getOctokit().issues.createComment({
-        issue_number: github.context.issue.number,
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        body: "A file has been created with your tweet content."
-    });
+    // github.getOctokit().issues.createComment({
+    //     issue_number: github.context.issue.number,
+    //     owner: github.context.repo.owner,
+    //     repo: github.context.repo.repo,
+    //     body: "A file has been created with your tweet content."
+    // });
 
     core.setOutput("issueNumber", issueNumber);
 
