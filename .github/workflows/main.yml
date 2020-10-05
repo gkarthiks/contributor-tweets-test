@@ -16,6 +16,7 @@ jobs:
         with:
           starting-parse-symbol: '<!--::-->'
           file-name-extension: 'tweet'
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3

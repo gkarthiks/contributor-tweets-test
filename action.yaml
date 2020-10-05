@@ -17,6 +17,10 @@ inputs:
     description: "The extension that needs to be used for the tweet file."
     required: true
     default: "tweet"
+  token:
+    description: Github token for octokit to comment back in the issue.
+    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
 runs:
   using: 'node12'
   main: 'index.js'

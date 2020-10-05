@@ -38,7 +38,7 @@ try {
     var fileNameExtension = core.getInput("file-name-extension").trim();
     var fileNameDate, completeFileName;
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim()
-
+    var githubToken = core.getInput('token')
     var issueTitle = github.context.payload.issue.title;
     var issueTitle30Chars = issueTitle.substring(0,30);
     var sanitizedIssueTitle = issueTitle30Chars.replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1);
@@ -52,13 +52,13 @@ try {
         fs.mkdirSync(pathToSave, { recursive: true });
     }
 
-    console.log(`
-    The symbol declared for parsing is ${startingParseSymbol}
-    The file name format is specified as ${fileNameFormat}
-    The file name extension is specified as ${fileNameExtension}
-    The path to save the file is specified as ${pathToSave}
-    Sanitized issue title is ${sanitizedIssueTitle}
-    Scheduled tweet time is ${tweetScheduleTime}
+    core.info(`    
+        The symbol declared for parsing is ${startingParseSymbol}
+        The file name format is specified as ${fileNameFormat}
+        The file name extension is specified as ${fileNameExtension}
+        The path to save the file is specified as ${pathToSave}
+        Sanitized issue title is ${sanitizedIssueTitle}
+        Scheduled tweet time is ${tweetScheduleTime}
     `);
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
@@ -87,12 +87,12 @@ try {
         if (err) throw err;
     });
 
-    // github.getOctokit().issues.createComment({
-    //     issue_number: github.context.issue.number,
-    //     owner: github.context.repo.owner,
-    //     repo: github.context.repo.repo,
-    //     body: "A file has been created with your tweet content."
-    // });
+    github.getOctokit(githubToken).issues.createComment({
+        issue_number: github.context.issue.number,
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        body: "A new file has been created with your tweet content."
+    });
 
     core.setOutput("issueNumber", issueNumber);
 
@@ -105,7 +105,6 @@ function validateTimestamp(tweetScheduleTime) {
     if (tweetScheduleTime !== "") {
         var parsedTime = Date.parse(tweetScheduleTime);
         if (isNaN(parsedTime)) {
-            core.error("Error occured while parsing the given timestamp. Please provide the time in conventional UTC format as 2020-10-04T16:02:11.029Z")
             core.setFailed("Error occured while parsing the given timestamp. Please provide the time in conventional UTC format as 2020-10-04T16:02:11.029Z")   
         }
     }
