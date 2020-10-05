@@ -37,15 +37,15 @@ try {
     var pathToSave = core.getInput("path-to-save").trim();
     var fileNameExtension = core.getInput("file-name-extension").trim();
     var fileNameDate, completeFileName;
-    var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim()
-    var githubToken = core.getInput('token')
+    var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
+    var githubToken = core.getInput('token');
     var issueTitle = github.context.payload.issue.title;
     var issueTitle30Chars = issueTitle.substring(0,30);
     var sanitizedIssueTitle = issueTitle30Chars.replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1);
-
+    var tweetLength = core.getInput('tweet-length');
     // Validate the given timestamp is valid time and return null, 
     // if not valid, throws an error and exits.
-    validateTimestamp(tweetScheduleTime)
+    validateTimestamp(tweetScheduleTime, githubToken)
 
     // Creates the new file to be committed into the repo.
     if (!fs.existsSync(pathToSave)){
@@ -62,6 +62,8 @@ try {
     `);
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
+    validateTweetContentLength(tweetContent, tweetLength, githubToken)
+
     console.log(`The tweet content is ${tweetContent}`);
 
     var scheduledTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim()
@@ -91,7 +93,7 @@ try {
         issue_number: github.context.issue.number,
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        body: "A new file has been created with your tweet content."
+        body: "A new file has been created with your tweet content. Please refer the below linked PR"
     });
 
     core.setOutput("issueNumber", issueNumber);
@@ -101,11 +103,29 @@ try {
 }
 
 // Validates the provided time is valid time format
-function validateTimestamp(tweetScheduleTime) {
+function validateTimestamp(tweetScheduleTime, githubToken) {
     if (tweetScheduleTime !== "") {
         var parsedTime = Date.parse(tweetScheduleTime);
         if (isNaN(parsedTime)) {
+            github.getOctokit(githubToken).issues.createComment({
+                issue_number: github.context.issue.number,
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                body: "Specified time is not a valid UTC timestamp for the tweet schedule. Please verify and comment /validate to trigger the workflow again"
+            });
             core.setFailed("Error occured while parsing the given timestamp. Please provide the time in conventional UTC format as 2020-10-04T16:02:11.029Z")   
         }
+    }
+}
+
+function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
+    if (tweetContent.length > tweetLength) {
+        github.getOctokit(githubToken).issues.createComment({
+            issue_number: github.context.issue.number,
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            body: "Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet and comment /validate to trigger the workflow again."
+        });
+        core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
     }
 }

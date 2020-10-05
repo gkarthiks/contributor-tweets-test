@@ -20,6 +20,10 @@ inputs:
   token:
     description: Github token for octokit to comment back in the issue.
     required: true
+  tweet-length:
+    description: Tweet length.
+    required: false
+    default: '280'
 runs:
   using: 'node12'
   main: 'index.js'

@@ -14,6 +14,6 @@ assignees: ''
 <!--::-->
 
 **Provide a human friendly time for the tweet to go out**
-<!-- in dd-MM-yyyy format -->
+<!-- Input the scheduled time in conventional UTC format as follows: "2020-10-04T16:02:00.000Z" format. Please use `new Date().toISOString()` in JavaScript to get the date format -->
 
->Time: 
+>Time:

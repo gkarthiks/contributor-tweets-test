@@ -2,9 +2,12 @@ name: Parse and create PR
 on:
   issues:
     types: ['opened']
+  issue_comment:
+    types: ['created']
 
 jobs:
   parse-issue-and-create-pr:
+    if: github.event_name != 'issue_comment' || contains(github.event.comment.body, '/validate')
     runs-on: ubuntu-latest
     name: Parse issue, validate timestamp and commit into tweets folder
     steps:
