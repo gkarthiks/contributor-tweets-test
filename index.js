@@ -58,7 +58,7 @@ try {
     The file name extension is specified as ${fileNameExtension}
     The path to save the file is specified as ${pathToSave}
     Sanitized issue title is ${sanitizedIssueTitle}
-    Scheduled tweet time is ${tweetTime}
+    Scheduled tweet time is ${tweetScheduleTime}
     `);
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
