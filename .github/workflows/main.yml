@@ -27,7 +27,7 @@ jobs:
             This PR is auto-generated.
             Ref: #${{ steps.parse-issue.outputs.issueNumber}}
             /cc @${{ github.actor }}
-          labels: report, automated pr
+          labels: add, automated pr
           branch: add/${{ steps.parse-issue.outputs.issueNumber}}
           base: master
           signoff: true
