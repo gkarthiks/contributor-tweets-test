@@ -43,14 +43,12 @@ try {
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
 
-    if ((tweetContent === "") || (tweetContent.length <1)) {
+    if (!/^[0-9a-zA-Z]+$/.test(tweetContent)) {
         core.ExitCode(0)
     }
 
     core.info("================================================================")
-    core.info(tweetContent)
-    core.info((tweetContent === ""))
-    core.info((tweetContent.length <1))
+    core.info(!/^[0-9a-zA-Z]+$/.test(tweetContent))
     core.info("================================================================")
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
