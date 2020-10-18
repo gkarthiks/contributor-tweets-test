@@ -49,11 +49,11 @@ try {
 
     core.info("================================================================")
     core.info(!/^[0-9a-zA-Z]+$/.test(tweetContent))
-    core.info(tweetContent.contains(newLine))
+    core.info(tweetContent.includes(newLine))
     core.info("================================================================")
 
 
-    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.contains(newLine)) {
+    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.includes(newLine)) {
         return        
     }
 
