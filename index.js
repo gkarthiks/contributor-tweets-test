@@ -46,14 +46,16 @@ try {
     var newLine = `
     `
 
-    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.contains(newLine)) {
-        core.ExitCode(0)
-    }
 
     core.info("================================================================")
     core.info(!/^[0-9a-zA-Z]+$/.test(tweetContent))
     core.info(tweetContent.contains(newLine))
     core.info("================================================================")
+
+
+    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.contains(newLine)) {
+        return        
+    }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
