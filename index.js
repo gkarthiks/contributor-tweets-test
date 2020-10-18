@@ -42,6 +42,11 @@ try {
     var issueTitle = github.context.payload.issue.title;
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
+
+    core.info("==================================================")
+    core.info(tweetContent)
+    core.info("==================================================")
+
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
     var fileNameDate, completeFileName;
