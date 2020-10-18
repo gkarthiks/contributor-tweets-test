@@ -47,6 +47,12 @@ try {
         core.ExitCode(0)
     }
 
+    core.info("================================================================")
+    core.info(tweetContent)
+    core.info((tweetContent === ""))
+    core.info((tweetContent.length <1))
+    core.info("================================================================")
+
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
     var fileNameDate, completeFileName;
