@@ -43,9 +43,9 @@ try {
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
 
-    core.info("==================================================")
-    core.info(tweetContent)
-    core.info("==================================================")
+    if ((tweetContent === "") || (tweetContent.length <1)) {
+        core.ExitCode(0)
+    }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
