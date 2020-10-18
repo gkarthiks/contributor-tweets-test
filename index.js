@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
+const { exit } = require('process');
 
 Date.prototype.ddmmyyyy = function() {
     var mm = this.getMonth() + 1;
@@ -53,8 +54,8 @@ try {
     core.info("================================================================")
 
 
-    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.includes(newLine)) {
-        return        
+    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.includes(newLine)) {        
+        exit(0)
     }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
