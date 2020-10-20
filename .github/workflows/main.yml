@@ -29,7 +29,7 @@ jobs:
           export output=steps.parse-issue.outputs.continue-workflow
           echo $output
       - name: Create Pull Request
-        if: ${{steps.parse-issue.outputs.continue-workflow}}
+        if: ${{steps.parse-issue.outputs.continue-workflow}} == true
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
