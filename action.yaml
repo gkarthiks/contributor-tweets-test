@@ -25,7 +25,7 @@ inputs:
     required: false
     default: '280'
 outputs:
-  CONTINUE_WORKFLOW:
+  continue-workflow:
     description: Binary value determines whether the flow should continue or skip.
 runs:
   using: 'node12'
