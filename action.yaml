@@ -24,6 +24,9 @@ inputs:
     description: Tweet length.
     required: false
     default: '280'
+outputs:
+  CONTINUE_WORKFLOW:
+    description: Binary value determines whether the flow should continue or skip.
 runs:
   using: 'node12'
   main: 'index.js'

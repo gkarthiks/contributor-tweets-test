@@ -58,6 +58,8 @@ try {
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         core.setOutput("CONTINUE_WORKFLOW", false)
         exit(0)
+    } else {
+        core.setOutput("CONTINUE_WORKFLOW", true)
     }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
