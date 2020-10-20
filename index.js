@@ -55,6 +55,7 @@ try {
 
 
     if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) || tweetContent.includes(newLine)) {        
+        core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         exit(0)
     }
 
