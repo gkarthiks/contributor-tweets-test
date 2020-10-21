@@ -49,6 +49,7 @@ try {
 
 
     core.info("================================================================")
+    core.info("Tweet content: ", tweetContent)
     core.info(!/^[0-9a-zA-Z]+$/.test(tweetContent))
     core.info(tweetContent.includes(newLine))
     core.info("================================================================")
