@@ -22,7 +22,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: echo continue-workflow data
         run: |
-          echo steps.parseissue.outputs.continue-workflow
+          echo ${{steps.parseissue.outputs.continue-workflow}}
       - name: Create Pull Request
         if: steps.parseissue.outputs.continue-workflow == true
         uses: peter-evans/create-pull-request@v3
