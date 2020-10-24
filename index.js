@@ -44,6 +44,8 @@ try {
 
     var parseSymbolFirstIndex = issueContext.indexOf(startingParseSymbol)
 
+    core.info(`The parsing symbol first found @ ${parseSymbolFirstIndex}`)
+
     if (parseSymbolFirstIndex < 0 ) {        
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         core.setOutput("continue-workflow", false)
