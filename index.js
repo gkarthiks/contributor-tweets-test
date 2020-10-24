@@ -152,6 +152,7 @@ function validateTimestamp(tweetScheduleTime, githubToken) {
                 githubToken
             )
             core.setFailed("Error occured while parsing the given timestamp. Please provide the time in conventional UTC format as 2020-10-04T16:02:11.029Z")
+            core.error("Error occured while parsing the given timestamp. Please provide the time in conventional UTC format as 2020-10-04T16:02:11.029Z")
         }
     }
 }
@@ -164,6 +165,7 @@ function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
             githubToken
         )
         core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
+        core.error("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
         return false
     } else {
         return true
