@@ -46,15 +46,15 @@ try {
 
     core.info(`The parsing symbol first found @ ${parseSymbolFirstIndex}`)
 
-    if (parseSymbolFirstIndex < 0 ) {        
-        core.info("The issue "+issueNumber+" is not for creation of new tweet.")
-        core.info("Setting the contibue-workflow to false.")
-        core.setOutput("continue-workflow", false)
-        exit(0)
-    } else {
-        core.info("Setting the contibue-workflow to TRUE.")
-        core.setOutput("continue-workflow", true)
-    }
+    // if (parseSymbolFirstIndex < 0 ) {        
+    //     core.info("The issue "+issueNumber+" is not for creation of new tweet.")
+    //     core.info("Setting the contibue-workflow to false.")
+    //     core.setOutput("continue-workflow", false)
+    //     exit(0)
+    // } else {
+    //     core.info("Setting the contibue-workflow to TRUE.")
+    //     core.setOutput("continue-workflow", true)
+    // }
 
     var parseSymbolLastIndex = issueContext.lastIndexOf(startingParseSymbol)
     var tweetContent = issueContext.substring(parseSymbolFirstIndex + startingParseSymbol.length, parseSymbolLastIndex);
@@ -68,15 +68,15 @@ try {
     `)
 
 
-    if (!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent))  {
-        core.info("Setting the contibue-workflow to TRUE.")
-        core.setOutput("continue-workflow", true)
-    } else {
-        core.info("The issue "+issueNumber+" is not for creation of new tweet.")
-        core.info("Setting the contibue-workflow to false.")
-        core.setOutput("continue-workflow", false)
-        exit(0)
-    }
+    // if (!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent))  {
+    //     core.info("Setting the contibue-workflow to TRUE.")
+    //     core.setOutput("continue-workflow", true)
+    // } else {
+    //     core.info("The issue "+issueNumber+" is not for creation of new tweet.")
+    //     core.info("Setting the contibue-workflow to false.")
+    //     core.setOutput("continue-workflow", false)
+    //     exit(0)
+    // }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
