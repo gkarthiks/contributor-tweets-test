@@ -88,7 +88,18 @@ try {
     validateTimestamp(tweetScheduleTime, githubToken)
 
     // Validates the length of the tweet content
-    validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
+    // validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
+    if (sanitizedTweetContent.length > tweetLength) {
+        commentToIssue(
+            "Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet and comment /validate to trigger the workflow again.",
+            githubToken
+        )
+        core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
+        core.info("Setting the continue-workflow to false.")
+        core.setOutput("continue-workflow", false)
+        exit(0)
+    }
+
     core.info(`The tweet content is ${sanitizedTweetContent}`);
 
     // Creates the new file to be committed into the repo.
