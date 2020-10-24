@@ -55,6 +55,7 @@ try {
     core.info("Replaced content :", replacedContent)
     var replacedContentLength = replacedContent.length
     core.info("Corrected Tweet Length ---> :", replacedContentLength)
+    core.info("Corrected Tweet Length comparision ---> :", replacedContentLength > 0 )
     core.info("================================================================")
 
 
