@@ -21,7 +21,7 @@ jobs:
           file-name-extension: 'tweet'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: echo continue-workflow data
-        if: steps.parseissue.outputs.continue-workflow == true
+        if: steps.parseissue.outputs.continue-workflow
         run: |
           echo ${{steps.parseissue.outputs.continue-workflow}}
       - name: Create Pull Request
