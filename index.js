@@ -54,6 +54,8 @@ try {
     core.info(tweetContent.includes(newLine))
     core.info("Tweet Length---> ")
     core.info(tweetContent.length)
+    core.info("Corrected Tweet Length---> ")
+    core.info(tweetContent.replace(/ /g,"").length)
     core.info("================================================================")
 
 
