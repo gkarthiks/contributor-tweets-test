@@ -67,7 +67,7 @@ try {
     core.info("Sanitized tweet contentlkength ---> ")
     core.info(sanitizedTweetContent.length)
 
-    if (!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent))  {
+    if (sanitizedTweetContent.length > 0)  {
         core.info("Setting the contibue-workflow to TRUE.")
         core.setOutput("continue-workflow", true)
     } else {
