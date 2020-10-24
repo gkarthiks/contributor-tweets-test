@@ -47,7 +47,7 @@ try {
 
     core.info("================================================================")
     core.info("Tweet content: ", tweetContent)
-    var contentAvailable = !/^[0-9a-zA-Z]+$/.test(tweetContent)
+    var contentAvailable = (!/^[0-9a-zA-Z]+$/.test(tweetContent))
     core.info("Is tweet content available ? :", contentAvailable)
     var contentLength = tweetContent.length
     core.info("Tweet Length--->:", contentLength)
