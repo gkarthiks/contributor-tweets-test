@@ -48,9 +48,11 @@ try {
 
     if (parseSymbolFirstIndex < 0 ) {        
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
+        core.info("Setting the contibue-workflow to false.")
         core.setOutput("continue-workflow", false)
         exit(0)
     } else {
+        core.info("Setting the contibue-workflow to TRUE.")
         core.setOutput("continue-workflow", true)
     }
 
@@ -67,9 +69,11 @@ try {
 
 
     if (!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent))  {
+        core.info("Setting the contibue-workflow to TRUE.")
         core.setOutput("continue-workflow", true)
     } else {
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
+        core.info("Setting the contibue-workflow to false.")
         core.setOutput("continue-workflow", false)
         exit(0)
     }
@@ -121,6 +125,8 @@ try {
     fs.writeFile(dataFilePath, sanitizedTweetContent, (err) => {
         if (err) throw err;
     });
+
+    core.info("Parsing done, commenting on issue.")
 
     commentToIssue(
         "A new file has been created with your tweet content. Please refer the below linked PR",
