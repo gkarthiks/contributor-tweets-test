@@ -162,8 +162,8 @@ function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
             githubToken
         )
         core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
-        core.error("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
-        exit(0)
+        core.info("Setting the continue-workflow to false.")
+        core.setOutput("continue-workflow", false)
     }
 }
 
