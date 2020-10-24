@@ -64,7 +64,7 @@ try {
     `)
 
 
-    if ((!/^[0-9a-zA-Z]+$/.test(sanitizedTweetContent)) ) {        
+    if ((!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent)) ) {        
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         core.setOutput("continue-workflow", false)
         exit(0)
