@@ -20,12 +20,8 @@ jobs:
           starting-parse-symbol: '<!--::-->'
           file-name-extension: 'tweet'
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: echo continue-workflow data
-        if: steps.parseissue.outputs.continue-workflow
-        run: |
-          echo ${{steps.parseissue.outputs.continue-workflow}}
       - name: Create Pull Request
-        if: steps.parseissue.outputs.continue-workflow == true
+        if: steps.parseissue.outputs.continue-workflow
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
