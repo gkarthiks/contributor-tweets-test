@@ -159,6 +159,7 @@ function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
             githubToken
         )
         core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
+        exit(1)
     }
 }
 
