@@ -56,9 +56,12 @@ try {
     var tweetContent = issueContext.substring(parseSymbolFirstIndex + startingParseSymbol.length, parseSymbolLastIndex);
     var sanitizedTweetContent = tweetContent.replace( /[\r\n]+/gm, "" )
 
-    core.info("================================================================")
-    core.info("Tweet content: ", sanitizedTweetContent)
-    core.info("================================================================")
+    core.info(`
+    ===========================================================================
+    Tweet content:
+        ${sanitizedTweetContent})
+    ===========================================================================
+    `)
 
 
     if ((!/^[0-9a-zA-Z]+$/.test(sanitizedTweetContent)) ) {        
