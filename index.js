@@ -64,12 +64,12 @@ try {
     `)
 
 
-    if ((!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent)) ) {        
+    if (!/[0-9a-zA-Z]+$/.test(sanitizedTweetContent))  {
+        core.setOutput("continue-workflow", true)
+    } else {
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         core.setOutput("continue-workflow", false)
         exit(0)
-    } else {
-        core.setOutput("continue-workflow", true)
     }
 
     var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
