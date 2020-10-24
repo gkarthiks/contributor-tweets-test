@@ -44,21 +44,17 @@ try {
 
     var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
 
-    var newLine = `
-    `
-
 
     core.info("================================================================")
     core.info("Tweet content: ", tweetContent)
-    core.info(!/^[0-9a-zA-Z]+$/.test(tweetContent))
-    core.info(tweetContent.includes(newLine))    
-    core.info("Tweet Length---> ")
-    core.info(tweetContent.length)
-    core.info("Corrected Tweet Length---> ")
-    core.info(tweetContent.replace(/ /g,"").length)
-    core.info("Corrected Tweet Length secomd---> ")
-    core.info(tweetContent.replace( /[\r\n]+/gm, "" ))
-    core.info(tweetContent.replace( /[\r\n]+/gm, "" ).length)
+    var contentAvailable = !/^[0-9a-zA-Z]+$/.test(tweetContent)
+    core.info("Is tweet content available ? :", contentAvailable)
+    var contentLength = tweetContent.length
+    core.info("Tweet Length--->:", contentLength)
+    var replacedContent = tweetContent.replace( /[\r\n]+/gm, "" )
+    core.info("Replaced content :", replacedContent)
+    var replacedContentLength = replacedContent.length
+    core.info("Corrected Tweet Length ---> :", replacedContentLength)
     core.info("================================================================")
 
 
