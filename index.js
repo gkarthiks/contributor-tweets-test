@@ -48,7 +48,7 @@ try {
 
     if (parseSymbolFirstIndex < 0 ) {        
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
-        core.info("Setting the contibue-workflow to false.")
+        core.info("Setting the continue-workflow to false.")
         core.setOutput("continue-workflow", false)
         exit(0)
     }
@@ -72,7 +72,7 @@ try {
         core.setOutput("continue-workflow", true)
     } else {
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
-        core.info("Setting the contibue-workflow to false.")
+        core.info("Setting the continue-workflow to false.")
         core.setOutput("continue-workflow", false)
         exit(0)
     }
