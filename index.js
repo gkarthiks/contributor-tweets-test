@@ -64,9 +64,6 @@ try {
     ===========================================================================
     `)
 
-    core.info("Sanitized tweet contentlkength ---> ")
-    core.info(sanitizedTweetContent.length)
-
     if (sanitizedTweetContent.length > 0)  {
         core.info("Setting the contibue-workflow to TRUE.")
         core.setOutput("continue-workflow", true)
@@ -88,7 +85,6 @@ try {
     validateTimestamp(tweetScheduleTime, githubToken)
 
     // Validates the length of the tweet content
-    // validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
     if (sanitizedTweetContent.length > tweetLength) {
         commentToIssue(
             "Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet and comment /validate to trigger the workflow again.",
@@ -164,18 +160,6 @@ function validateTimestamp(tweetScheduleTime, githubToken) {
     }
 }
 
-// Validates the length of the tweer content
-function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
-    if (tweetContent.length > tweetLength) {
-        commentToIssue(
-            "Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet and comment /validate to trigger the workflow again.",
-            githubToken
-        )
-        core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
-        core.info("Setting the continue-workflow to false.")
-        core.setOutput("continue-workflow", false)
-    }
-}
 
 // Commenting back to issue with provided message
 function commentToIssue(body, githubToken) {
