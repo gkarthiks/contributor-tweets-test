@@ -42,27 +42,26 @@ try {
     var issueNumber = github.context.payload.issue.number;
     var issueTitle = github.context.payload.issue.title;
 
-    var tweetContent = issueContext.substring(issueContext.indexOf(startingParseSymbol) + startingParseSymbol.length, issueContext.lastIndexOf(startingParseSymbol));
+    var parseSymbolFirstIndex = issueContext.indexOf(startingParseSymbol)
 
-
-    core.info("================================================================")
-    core.info("Tweet content: ", tweetContent)
-    var contentAvailable = (!/^[0-9a-zA-Z]+$/.test(tweetContent))
-    core.info("Is tweet content available ? :", contentAvailable)
-    var contentLength = tweetContent.length
-    core.info("Tweet Length--->:", contentLength)
-    var replacedContent = tweetContent.replace( /[\r\n]+/gm, "" )
-    core.info("Replaced content :", replacedContent)
-    var replacedContentLength = replacedContent.length
-    core.info("Corrected Tweet Length ---> :", replacedContentLength)
-    core.info("Corrected Tweet Length comparision ---> :", replacedContentLength > 0 )
-    if (replacedContentLength.trim > 0) {
-        core.info("Inside teh comparision condition")
+    if (firstIndex < 0 ) {        
+        core.info("The issue "+issueNumber+" is not for creation of new tweet.")
+        core.setOutput("continue-workflow", false)
+        exit(0)
+    } else {
+        core.setOutput("continue-workflow", true)
     }
+
+    var parseSymbolLastIndex = issueContext.lastIndexOf(startingParseSymbol)
+    var tweetContent = issueContext.substring(parseSymbolFirstIndex + startingParseSymbol.length, parseSymbolLastIndex);
+    var sanitizedTweetContent = tweetContent.replace( /[\r\n]+/gm, "" )
+
+    core.info("================================================================")
+    core.info("Tweet content: ", sanitizedTweetContent)
     core.info("================================================================")
 
 
-    if ((!/^[0-9a-zA-Z]+$/.test(tweetContent)) ) {        
+    if ((!/^[0-9a-zA-Z]+$/.test(sanitizedTweetContent)) ) {        
         core.info("The issue "+issueNumber+" is not for creation of new tweet.")
         core.setOutput("continue-workflow", false)
         exit(0)
@@ -81,8 +80,8 @@ try {
     validateTimestamp(tweetScheduleTime, githubToken)
 
     // Validates the length of the tweet content
-    validateTweetContentLength(tweetContent, tweetLength, githubToken)
-    core.info(`The tweet content is ${tweetContent}`);
+    validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
+    core.info(`The tweet content is ${sanitizedTweetContent}`);
 
     // Creates the new file to be committed into the repo.
     if (!fs.existsSync(pathToSave)){
@@ -114,7 +113,7 @@ try {
         core.info(`File name to be saved as ${completeFileName}`)
     }
     const dataFilePath = pathToSave+'/'+completeFileName;
-    fs.writeFile(dataFilePath, tweetContent, (err) => {
+    fs.writeFile(dataFilePath, sanitizedTweetContent, (err) => {
         if (err) throw err;
     });
 
