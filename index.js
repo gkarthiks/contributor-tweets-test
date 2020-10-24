@@ -88,51 +88,56 @@ try {
     validateTimestamp(tweetScheduleTime, githubToken)
 
     // Validates the length of the tweet content
-    validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
-    core.info(`The tweet content is ${sanitizedTweetContent}`);
+    var isValidContentLength = validateTweetContentLength(sanitizedTweetContent, tweetLength, githubToken)
+    if(isValidContentLength) {
+        core.info(`The tweet content is ${sanitizedTweetContent}`);
 
-    // Creates the new file to be committed into the repo.
-    if (!fs.existsSync(pathToSave)){
-        fs.mkdirSync(pathToSave, { recursive: true });
-    }
-
-    core.info(`    
-        The symbol declared for parsing is ${startingParseSymbol}
-        The file name format is specified as ${fileNameFormat}
-        The file name extension is specified as ${fileNameExtension}
-        The path to save the file is specified as ${pathToSave}
-        Sanitized issue title is ${sanitizedIssueTitle}
-        Scheduled tweet time is ${tweetScheduleTime}
-    `);
-
-    if (tweetScheduleTime === "") {
-        core.info("Scheduled time is null, creating the file name with the specified format.")
-        var date = new Date();
-        if (fileNameFormat === "dd-mm-yyyy-hh-MM") {
-            fileNameDate = date.ddmmyyyy();
-        } else if (fileNameFormat === "mm-dd-yyyy-hh-MM") {
-            fileNameDate = date.mmddyyyy();
+        // Creates the new file to be committed into the repo.
+        if (!fs.existsSync(pathToSave)){
+            fs.mkdirSync(pathToSave, { recursive: true });
         }
-        completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
-        core.info(`File name to be saved as ${completeFileName}`)
+    
+        core.info(`    
+            The symbol declared for parsing is ${startingParseSymbol}
+            The file name format is specified as ${fileNameFormat}
+            The file name extension is specified as ${fileNameExtension}
+            The path to save the file is specified as ${pathToSave}
+            Sanitized issue title is ${sanitizedIssueTitle}
+            Scheduled tweet time is ${tweetScheduleTime}
+        `);
+    
+        if (tweetScheduleTime === "") {
+            core.info("Scheduled time is null, creating the file name with the specified format.")
+            var date = new Date();
+            if (fileNameFormat === "dd-mm-yyyy-hh-MM") {
+                fileNameDate = date.ddmmyyyy();
+            } else if (fileNameFormat === "mm-dd-yyyy-hh-MM") {
+                fileNameDate = date.mmddyyyy();
+            }
+            completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
+            core.info(`File name to be saved as ${completeFileName}`)
+        } else {
+            fileNameDate = new Date(tweetScheduleTime).toJSON().replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1)
+            completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
+            core.info(`File name to be saved as ${completeFileName}`)
+        }
+        const dataFilePath = pathToSave+'/'+completeFileName;
+        fs.writeFile(dataFilePath, sanitizedTweetContent, (err) => {
+            if (err) throw err;
+        });
+    
+        core.info("Parsing done, commenting on issue.")
+    
+        commentToIssue(
+            "A new file has been created with your tweet content. Please refer the below linked PR",
+            githubToken
+        )
+    
+        core.setOutput("issueNumber", issueNumber);
     } else {
-        fileNameDate = new Date(tweetScheduleTime).toJSON().replace(/[^a-zA-Z0-9]/g,'-').trim().slice(0, -1)
-        completeFileName = fileNameDate+sanitizedIssueTitle+"."+fileNameExtension
-        core.info(`File name to be saved as ${completeFileName}`)
+        exit(0)
     }
-    const dataFilePath = pathToSave+'/'+completeFileName;
-    fs.writeFile(dataFilePath, sanitizedTweetContent, (err) => {
-        if (err) throw err;
-    });
 
-    core.info("Parsing done, commenting on issue.")
-
-    commentToIssue(
-        "A new file has been created with your tweet content. Please refer the below linked PR",
-        githubToken
-    )
-
-    core.setOutput("issueNumber", issueNumber);
 } catch (error) {
     core.setFailed(error.message);
 }
@@ -159,6 +164,9 @@ function validateTweetContentLength(tweetContent, tweetLength, githubToken) {
             githubToken
         )
         core.setFailed("Tweet content length is exceeding the permitted tweet length. Please rephrase the tweet.")
+        return false
+    } else {
+        return true
     }
 }
 
