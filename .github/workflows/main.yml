@@ -40,7 +40,7 @@ jobs:
           signoff: true
           delete-branch: true
   run-on-pull-request:
-    if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     name: pullrequest step
     steps:
