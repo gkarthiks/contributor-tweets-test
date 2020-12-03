@@ -44,5 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     name: pullrequest step
     steps:
-      - name: testpr    
-        run: echo This event is a pull request that had an assignee removed.
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pull request verifictaion step
+        uses: ./
+        id: testprtweet
+        with:
+          starting-parse-symbol: '<!--::-->'
+          file-name-extension: 'tweet'
+          token: ${{ secrets.GITHUB_TOKEN }}
