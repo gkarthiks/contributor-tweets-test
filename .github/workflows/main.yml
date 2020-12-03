@@ -1,7 +1,5 @@
 name: Parse and create PR
 on:
-#   schedule:
-#     - cron: '*/3 * * * *'
   issues:
     types: ['opened']
   issue_comment:
