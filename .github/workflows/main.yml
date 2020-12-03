@@ -39,7 +39,10 @@ jobs:
           base: master
           signoff: true
           delete-branch: true
+  run-on-pull-request:
     if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
+    runs-on: ubuntu-latest
+    name: pullrequest step
     steps:
-      - name: pullrequest step
+      - name: testpr    
         run: echo This event is a pull request that had an assignee removed.
