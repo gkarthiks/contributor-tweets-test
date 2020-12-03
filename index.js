@@ -30,10 +30,10 @@ Date.prototype.mmddyyyy = function() {
 try {
     
     core.info("=======================")
-    core.info(core.context.payload)
+    core.info(github.context.eventName)
     core.info("=======================")
 
-    
+
     // Extract and create the necessary variables and values
     // sort of initialiazition part
     var startingParseSymbol = core.getInput("starting-parse-symbol").trim();
