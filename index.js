@@ -31,7 +31,7 @@ try {
     
     var eventName = github.context.eventName
     
-    core.info("Current run happened for the following trigger:", eventName)
+    core.info("Current run happened for the following trigger: "+eventName)
 
     if (eventName.startsWith("issue")) {
 
