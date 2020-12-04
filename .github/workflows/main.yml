@@ -35,7 +35,7 @@ jobs:
           title: 'add: new tweet file via automation'
           body: |
             This PR is auto-generated.
-            Ref: #${{ steps.parseissue.outputs.issueNumber}}
+            Fixes: #${{ steps.parseissue.outputs.issueNumber}}
             /cc @${{ github.actor }}
           labels: add, automated pr
           branch: add/${{ steps.parseissue.outputs.issueNumber}}
