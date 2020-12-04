@@ -80,7 +80,8 @@ try {
             exit(0)
         }
 
-        var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
+        // TBD: uncomment when scheduled time is enabled.
+        // var tweetScheduleTime = issueContext.substring(issueContext.indexOf("Time:")+5, issueContext.length).trim();
 
         var fileNameDate, completeFileName;
         var issueTitle30Chars = issueTitle.substring(0,30);
@@ -114,9 +115,12 @@ try {
                 The file name extension is specified as ${fileNameExtension}
                 The path to save the file is specified as ${pathToSave}
                 Sanitized issue title is ${sanitizedIssueTitle}
-                Scheduled tweet time is ${tweetScheduleTime}
+
             `);
-        
+            // TBD: uncomment when scheduled time is enabled and move into the brace above.
+            // Scheduled tweet time is ${tweetScheduleTime}
+            // TBD: remove the below assignment to tweetScheduleTime
+            var tweetScheduleTime = ""
             if (tweetScheduleTime === "") {
                 core.info("Scheduled time is null, creating the file name with the specified format.")
                 var date = new Date();
