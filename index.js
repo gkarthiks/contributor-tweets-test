@@ -144,9 +144,8 @@ try {
 
         core.setOutput("issueNumber", issueNumber);
     } else if (eventName.startsWith("pull_request")) {
-        core.info("its pull request!!!!!!!!!!!!!!!")
+        core.info("TBD: Pull Request job")
     }
-
 } catch (error) {
     core.setFailed(error.message);
 }
