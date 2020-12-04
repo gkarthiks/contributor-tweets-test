@@ -88,7 +88,8 @@ try {
 
         // Validate the given timestamp is valid time and return null, 
         // if not valid, throws an error and exits.
-        validateTimestamp(tweetScheduleTime, githubToken)
+        // TBD: uncomment when scheduled time is enabled.
+        // validateTimestamp(tweetScheduleTime, githubToken)
 
         // Validates the length of the tweet content
         if (sanitizedTweetContent.length > tweetLength) {
