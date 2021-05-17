@@ -5,5 +5,7 @@ jobs:
     if: github.event.label.name == 'test-issue'
     name: Hello world action
     runs-on: ubuntu-latest
-      - run: |
+    steps:
+      - name: echo-run
+        run: |
           echo Hello!
