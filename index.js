@@ -28,18 +28,16 @@ Date.prototype.mmddyyyy = function() {
 };
 
 try {
-    var data = JSON.stringify(github.context)
-    core.info(data)
-    core.info("==================================================================")
-
     var eventName = github.context.eventName
     core.info("Current run happened for the following trigger: "+eventName)
 
-    var issueLabel = github.context.payload.issue.issueLabel;
-
-    core.info("Current run carries the labels: "+issueLabel)
-
     if (eventName.startsWith("issue")) {
+
+        var strLabels = JSON.stringify(github.context.payload.issue.labels)
+        if (strLabels.includes("test-issue")) {
+            console.log("yes")
+        }
+
 
         // Extract and create the necessary variables and values
         // sort of initialiazition part
