@@ -1,5 +1,7 @@
 name: A workflow for my Hello World file
-on: push
+on:
+  issues:
+    types: ['opened']
 jobs:
   build:
     if: github.event.label.name == 'test-issue'
