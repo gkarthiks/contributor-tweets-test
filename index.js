@@ -28,7 +28,10 @@ Date.prototype.mmddyyyy = function() {
 };
 
 try {
-    
+    var data = JSON.stringify(github.context)
+    core.info(data)
+    core.info("==================================================================")
+
     var eventName = github.context.eventName
     core.info("Current run happened for the following trigger: "+eventName)
 
