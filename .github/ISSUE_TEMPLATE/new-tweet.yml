@@ -1,0 +1,15 @@
+name: Request a new tweet via K8sContributors handle
+description: Request a new tweet via K8sContributors handle.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue form is for creating a request for new Tweets only!
+
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Tweet Content
+      description: >-
+        Enter the tweet content below and please make sure to double check the links and annotations before submitting.
